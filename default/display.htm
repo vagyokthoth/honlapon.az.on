@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>home page</title>
+<link rel="stylesheet" href="../style/default.css" />
+<script type="text/javascript" src="../script/config.js"></script>
+<script type="text/javascript" src="../script/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../script/md5.js"></script>
+<script type="text/javascript" src="../script/functions.js"></script>
+<script type="text/javascript">
+$(function(){
+    /**
+     * make all the hashes!
+     */
+    $('form.hash').on('submit', function(e){
+        e.preventDefault();
+        var textClear = $('input.text-clear', $(this)).val();
+        var textHash = hex_md5(textClear);
+        $('input.text-hash', $(this)).val(textHash);
+    });
+    /**
+     * we do not want frame to browse!
+     */
+    $('form.frame-bust').on('submit', function(e){
+        e.preventDefault();
+        parent.window.location = $(this).attr('action') + '?q=' + $('.text-search', $(this)).val();
+    });
+    $('a').click(function(e){
+        e.preventDefault();
+        parent.window.location = $(this).attr('href');
+    });
+});
+</script>
+</head>
+<body id="display">
+<!--
+    browser bar not fast, go choose faster
+-->
+    <div class="section" id="section-search">
+        <h3>Search</h3>
+        <table class="search">
+<!-- TODO: duckduckgo search (you go, quack!) -->
+            <tr>
+                <td class="label">
+                    <label for="search-duckduckgo">DuckDuckGo</label>
+                </td>
+                <td class="field">
+                    <form class="frame-bust" action="https://duckduckgo.com/" method="get">
+                        <input class="hidden" type="submit" />
+                        <input class="text-search" id="search-duckduckgo" name="q" type="text" />
+                    </form>
+                </td>
+            </tr>
+<!-- search google (they know everything over you!) -->
+            <tr>
+                <td class="label">
+                    <label for="search-google">Google</label>
+                </td>
+                <td class="field">
+                    <form class="frame-bust" action="https://www.google.com/search" method="get">
+                        <input class="hidden" type="submit" />
+                        <input class="text-search" id="search-google" name="q" type="text" />
+                    </form>
+                </td>
+            </tr>
+<!-- must uncomment to search bing (just to joke, that person never see this) -->
+<!--
+            <tr>
+                <td class="label">
+                    <label for="search-bing">Bing</label>
+                </td>
+                <td class="field">
+                    <form class="frame-bust" action="https://www.bing.com/search" method="get">
+                        <input class="hidden" type="submit" />
+                        <input class="text-search" id="search-bing" name="q" type="text" />
+                    </form>
+                </td>
+            </tr>
+-->
+            <tr>
+                <td class="link" colspan="2">
+                    <a href="http://craigslist.org/" target="_parent">Craigslist</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+<!-- hash the string for fun and profit -->
+    <div class="section js-required" id="section-hash">
+        <h3>Hash</h3>
+        <form id="hash-md5" class="hash">
+            <input class="hidden" type="submit" />
+            <table>
+                <tr>
+                    <td class="label">
+                        <label for="input-cleartext">Cleartext:</label>
+                    </td>
+                    <td class="field">
+                        <input class="text-clear" id="input-cleartext"  name="text_clear" type="text" autocomplete="off" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">
+                        <label for="input-hashtext">Hash:</label>
+                    </td>
+                    <td class="field">
+                        <input  class="text-hash" id="input-hashtext" name="text_hash" type="text" autocomplete="off" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="reset" value="Clear" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    
+    <div class="section" id="section-tools">
+        <h3>Tools</h3>
+        <ul>
+            <li><a href="http://validator.w3.org/" target="_parent">W3C HTML Validator</a></li>
+        </ul>
+    </div>
+
+<!--
+    to make new section:
+    
+    <div class="section" id="section-">
+        <h3></h3>
+        <ul>
+            <li><a href="" target="_parent"></a></li>
+        </ul>
+    </div>
+-->
+
+</body>
+</html>
